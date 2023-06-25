@@ -3,7 +3,7 @@ Description: Creates an S3 bucket for hosting a Static HTML/CSS website
 Parameters:
   BucketName:
     Type: String
-    Default: <PUT_YOUR_BUCKETNAME_HERE>
+    Default: PUT_YOUR_BUCKETNAME_HERE
 Resources:
   S3Bucket:
     Type: AWS::S3::Bucket
