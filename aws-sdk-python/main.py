@@ -41,7 +41,6 @@ s3.put_bucket_policy(Bucket=bucket_name, Policy=bucket_policy)
 s3.put_bucket_website(
      Bucket=bucket_name,
      WebsiteConfiguration={
-     'ErrorDocument': {'Key': 'error.html'},
      'IndexDocument': {'Suffix': 'index.html'},
     }
  )
