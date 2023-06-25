@@ -1,0 +1,65 @@
+---
+# (Optional) The AWS CloudFormation template version that the template conforms to. 
+# The template format version isn't the same as the API or WSDL version. 
+# The template format version can change independently of the API and WSDL versions.
+
+
+AWSTemplateFormatVersion: "version date"
+
+# (Optional) A text string that describes the template. 
+# This section must always follow the template format version section.
+
+Description:
+  String
+
+# (Optional) Objects that provide additional information about the template.
+
+Metadata:
+  template metadata
+
+# (Optional) Values to pass to your template at runtime 
+# (when you create or update a stack). 
+# You can refer to parameters from the Resources and Outputs sections of the template.
+
+Parameters:
+  set of parameters
+
+# (Optional) Validates a parameter or a combination 
+# of parameters passed to a template during a stack creation or stack update.
+
+Rules:
+  set of rules
+
+# (Optional) A mapping of keys and associated values that you can use to specify 
+# conditional parameter values, similar to a lookup table. 
+# You can match a key to a corresponding value by using the Fn::FindInMap 
+# intrinsic function in the Resources and Outputs sections.
+
+Mappings:
+  set of mappings
+
+# (Optional) Conditions that control whether certain resources are created 
+# or whether certain resource properties are assigned a value during stack 
+# creation or update. For example, you could conditionally create 
+# a resource that depends on whether the stack is for a production or test environment.
+Conditions:
+  set of conditions
+
+# (Optional) SAM specific
+Transform:
+  set of transforms
+
+# (Required) Specifies the stack resources and their properties, 
+# such as an Amazon Elastic Compute Cloud instance or 
+# an Amazon Simple Storage Service bucket. You can refer to resources 
+# in the Resources and Outputs sections of the template.
+
+Resources:
+  set of resources
+
+# (Optional) Describes the values that are returned whenever you view your 
+# stack's properties. For example, you can declare an output for an S3 
+# bucket name and then call the aws cloudformation describe-stacks 
+# AWS CLI command to view the name.
+Outputs:
+  set of outputs
