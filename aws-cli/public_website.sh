@@ -2,14 +2,36 @@
 
 set -e
 
-UNIQUE_BUCKET_NAME=<UNIQUE_BUCKET_NAME>
+bucket_name=<PUT_YOUR_BUCKET_NAME_HERE>
+aws_region=eu-central-1
 
 # Create a bucket + Enable static website hosting
-aws s3api create-bucket --bucket ${UNIQUE_BUCKET_NAME} --acl public-read
-aws s3 website s3://${UNIQUE_BUCKET_NAME} --index-document index.html
+aws s3api create-bucket --bucket "${bucket_name}" --create-bucket-configuration LocationConstraint=${aws_region} --no-cli-pager
+#aws s3api put-public-access-block --bucket "${bucket_name}" --public-access-block-configuration "BlockPublicPolicy=false" --region ${aws-region} --no-cli-pager
+
+aws s3api put-public-access-block \
+    --bucket "${bucket_name}" \
+    --public-access-block-configuration "BlockPublicAcls=false,IgnorePublicAcls=false,BlockPublicPolicy=false,RestrictPublicBuckets=false"
+
 
 # Add a bucket policy that makes your bucket content publicly available
-aws s3api put-bucket-policy --bucket ${UNIQUE_BUCKET_NAME} --policy file://policy_s3.json
+aws s3api put-bucket-policy --no-cli-pager --bucket "${bucket_name}" --policy '{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "PublicReadGetObject",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": [
+                "s3:GetObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::'"${bucket_name}"'/*"
+ 
+            ]
+        }
+    ]
+}'
 
 # dump an index document
 cat << EOF > index.html
@@ -25,9 +47,9 @@ cat << EOF > index.html
 EOF
 
 # upload index
-aws s3 cp index.html s3://${UNIQUE_BUCKET_NAME}
+aws s3 cp index.html s3://${bucket_name} --no-cli-pager
 
-
+aws s3 website "s3://${bucket_name}" --index-document index.html
 
 # Test your website endpoint
-curl http://${UNIQUE_BUCKET_NAME}.s3-website.us-east-1.amazonaws.com
+curl "http://${bucket_name}.s3-website.eu-central-1.amazonaws.com/"
